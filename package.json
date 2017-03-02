@@ -1,0 +1,15 @@
+{
+  "name": "smogapi",
+  "version": "0.0.1",
+  "description": "An API that in turn interfaces with the government's smog API. This one just cleans up data for the client.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon server.js"
+  },
+  "author": "Davis Kimoto",
+  "license": "MIT",
+  "dependencies": {
+    "restify": "^4.3.0"
+  }
+}
