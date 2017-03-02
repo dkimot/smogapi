@@ -1,13 +1,16 @@
 'use strict'
 const restify = require('restify');
+const airNowRequest = require('./utils/airNowRequest');
 
 let smogJSON = {
   smogLevel: 4
 }
 
 const respondWithSmog = (req, res, next) => {
-  res.send(smogJSON);
-  next();
+  airNowRequest.makeZipRequest('84108').then((data) => {
+    res.send(data);
+    next();
+  });
 }
 
 const server = restify.createServer();
