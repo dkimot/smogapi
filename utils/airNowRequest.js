@@ -15,7 +15,7 @@ const airNowRequest = {
   makeZipRequest(zip) {
     return callZipCode(zip)
       .then((response) => {
-        return response;
+        return response.data;
       })
       .catch((err) => console.log(err));
   }
