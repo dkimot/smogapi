@@ -10,7 +10,7 @@ const respondWithSmog = (req, res, next) => {
   airNowRequest.makeZipRequest('84108').then((data) => {
     res.send(data);
     next();
-  });
+  }).catch(err => console.log(err));
 }
 
 const server = restify.createServer();
