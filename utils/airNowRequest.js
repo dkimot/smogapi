@@ -17,6 +17,30 @@ const callForecast = (zip) => {
   return axios.get(request);
 }
 
+const statusColor = (num) => {
+  switch (num) {
+    case 1:
+      return "#00e400";
+      break;
+    case 2:
+      return "#ffff00";
+      break;
+    case 3:
+      return "#ff7e00";
+      break;
+    case 4:
+      return "#ff0000";
+      break;
+    case 5:
+      return "#99004c";
+      break;
+    case 6:
+      return "#7e0023";
+      break;
+    default:
+      return "#fff";
+  }
+}
 
 const parseCurrent = (data) => {
   return {
@@ -26,9 +50,11 @@ const parseCurrent = (data) => {
     ozoneAQI: data[0].AQI,
     ozoneAQIcategory: data[0].Category.Name,
     ozoneAQInumber: data[0].Category.Number,
+    ozoneAQIcolor: statusColor(data[0].Category.Number),
     pm25AQI: data[1].AQI,
     pm25AQIcategory: data[1].Category.Name,
     pm25AQInumber: data[1].Category.Number,
+    pm25AQIcolor: statusColor(data[1].Category.Number),
     actionDay: (data[0].Category.Number > 2 || data[1].Category.Number > 2 ? true : false)
   }
 }
