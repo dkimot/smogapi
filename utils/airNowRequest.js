@@ -5,16 +5,49 @@ const axios = require('axios');
 
 const API_KEY = '4552063A-66E3-474C-AA48-E08B90B0C6AE';
 
-const callZipCode = (zip) => {
+const callCurrent = (zip) => {
+  const request = 'http://www.airnowapi.org/aq/observation/zipCode/current/?format=application/json&zipCode=' + zip + '&distance=25&API_KEY=' + API_KEY;
+
+  return axios.get(request);
+}
+
+const callForecast = (zip) => {
   const request = 'http://www.airnowapi.org/aq/forecast/zipCode/?format=application/json&zipCode=' + zip + '&API_KEY=' + API_KEY;
 
   return axios.get(request);
 }
 
+
+const parseCurrent = (data) => {
+  return {
+    dateTime: data[0].DateObserved + (data[0].HourObserved < 10 ? '0' + data[0].HourObserved : data[0].HourObserved) + ':00' + (data[0].HourObserved < 12 ? 'am ' : 'pm ') + data[0].LocalTimeZone,
+    city: data[0].ReportingArea,
+    state: data[0].StateCode,
+    ozoneAQI: data[0].AQI,
+    ozoneAQIcategory: data[0].Category.Name,
+    ozoneAQInumber: data[0].Category.Number,
+    pm25AQI: data[1].AQI,
+    pm25AQIcategory: data[1].Category.Name,
+    pm25AQInumber: data[1].Category.Number,
+    actionDay: (data[0].Category.Number > 2 || data[1].Category.Number > 2 ? true : false)
+  }
+}
+
 const airNowRequest = {
-  makeZipRequest(zip) {
-    return callZipCode(zip)
+  getCurrent(zip) {
+    return callCurrent(zip)
       .then((response) => {
+        //only returning the data object from the response
+        console.log(parseCurrent(response.data));
+        return parseCurrent(response.data);
+      })
+      .catch((err) => console.log(err));
+  },
+  getForecast(zip) {
+    return callForecast(zip)
+      .then((response) => {
+        //only returning the data object from the response
+        console.log(response);
         return response.data;
       })
       .catch((err) => console.log(err));
