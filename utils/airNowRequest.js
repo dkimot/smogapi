@@ -44,7 +44,7 @@ const statusColor = (num) => {
 
 const parseCurrent = (data) => {
   return {
-    dateTime: data[0].DateObserved + (data[0].HourObserved < 10 ? '0' + data[0].HourObserved : data[0].HourObserved) + ':00' + (data[0].HourObserved < 12 ? 'am ' : 'pm ') + data[0].LocalTimeZone,
+    dateTime: data[0].DateObserved + (data[0].HourObserved < 10 ? '0' + data[0].HourObserved : data[0].HourObserved) + ':00 ' + data[0].LocalTimeZone,
     city: data[0].ReportingArea,
     state: data[0].StateCode,
     ozoneAQI: data[0].AQI,
