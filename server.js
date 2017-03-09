@@ -7,14 +7,14 @@ let smogJSON = {
 }
 
 const respondWithSmog = (req, res, next) => {
-  airNowRequest.getCurrent('84108').then((data) => {
+  airNowRequest.getCurrent(req.params.zip).then((data) => {
     res.send(data);
     next();
   }).catch(err => console.log(err));
 }
 
 const server = restify.createServer();
-server.get('/', respondWithSmog);
+server.get('/:zip', respondWithSmog);
 
 server.listen(3030, () => {
   console.log('%s listening at %s', server.name, server.url);
