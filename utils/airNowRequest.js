@@ -59,6 +59,36 @@ const parseCurrent = (data) => {
   }
 }
 
+const parseForecast = (data) => {
+  return {
+    city: data[0].ReportingArea,
+    state: data[0].StateCode,
+    days: [
+      {
+        date: data[0].DateForecast,
+        parameter: data[0].ParameterName,
+        aqi: data[0].AQI,
+        category: data[0].Category.Name,
+        categoryNum: data[0].Category.Number
+      },
+      {
+        date: data[1].DateForecast,
+        parameter: data[1].ParameterName,
+        aqi: data[1].AQI,
+        category: data[1].Category.Name,
+        categoryNum: data[1].Category.Number
+      },
+      {
+        date: data[2].DateForecast,
+        parameter: data[2].ParameterName,
+        aqi: data[2].AQI,
+        category: data[2].Category.Name,
+        categoryNum: data[2].Category.Number
+      }
+    ]
+  }
+}
+
 const airNowRequest = {
   getCurrent(zip) {
     return callCurrent(zip)
@@ -73,8 +103,8 @@ const airNowRequest = {
     return callForecast(zip)
       .then((response) => {
         //only returning the data object from the response
-        console.log(response);
-        return response.data;
+        console.log(parseForecast(response.data));
+        return parseForecast(response.data);
       })
       .catch((err) => console.log(err));
   }
